@@ -52,3 +52,5 @@
     - **POST** :
 
       1.  `/properties` - to create new member in database with request body as JSON object. Request body must contain `{ "address": { "street": "10 King Street", "suburb": "St Kilda", "state": "VIC", "postcode": 3090 }, "salePrice": 12345, "description": "Hello" }` all are required.
+
+- **Note** : Postman can be used to test the application.
