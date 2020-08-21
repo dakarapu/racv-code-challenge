@@ -6,13 +6,6 @@ import { asyncCallbackMiddleware } from "../middleware/asyncCallback";
 let router = express.Router();
 
 router.get(
-  "/",
-  asyncCallbackMiddleware(async (req, res) => {
-    res.status(200).send("Welcome to homepage!!");
-  })
-);
-
-router.get(
   "/properties",
   asyncCallbackMiddleware(async (req, res) => {
     let properties = await PropertyController.getAll();
@@ -44,29 +37,14 @@ router.post(
   asyncCallbackMiddleware(async (req, res) => {
     let error = Schemas.propertyObjValidation(req.body);
     if (error !== null) {
-      return res.status(400).send(error);
+      return res.status(400).send(error.details[0].message);
     }
-    // console.log(req.body);
     let property = await PropertyController.create(req.body);
-    // let property = req.body;
-    console.log(property);
-    if (property === undefined || property.hasOwnProperty("errno")) {
-      // return res.status(500).send(`${property.code}: ${property.sqlMessage}`);
+    if (typeof property === "error") {
+      return res.status(400).send("Bad Request");
     } else {
-      return res.status(201).send("property created Successfully");
+      return res.status(201).send("Property created Successfully");
     }
-  })
-);
-
-router.delete(
-  "/properties/:id",
-  asyncCallbackMiddleware(async (req, res) => {
-    let id = parseInt(req.params.id);
-    let result = await PropertyController.remove(id);
-    if (result && result.affectedRows === 0) {
-      return res.status(404).send(`No property found with requested Id ${id}`);
-    }
-    return res.status(200).send(`Successfully deleted property with ID ${id}`);
   })
 );
 

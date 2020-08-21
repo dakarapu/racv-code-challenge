@@ -1,12 +1,9 @@
-import * as PropertyModel from "../db/models/property";
-// const store = require('data-store')({ path: process.cwd() + '/foo.json' });
 import dataStore from "data-store";
 
 const store = dataStore({ path: process.cwd() + "/src/db/data/property.json" });
 
 export async function create(obj) {
   try {
-    // let property = await PropertyModel.createProperty(obj);
     let property = store.union(obj.address.suburb, obj);
     return property;
   } catch (e) {
@@ -16,7 +13,6 @@ export async function create(obj) {
 
 export async function getAll() {
   try {
-    // let members = await PropertyModel.getPropertys();
     let properties = store.get();
     return properties;
   } catch (e) {
@@ -43,22 +39,10 @@ export async function getProperty(suburb) {
             ? `Property is below the avg price for properties in suburb`
             : `Property is equal to the avg price for properties in suburb`;
       });
-      console.log(`Price Avg:${avgPrice}`);
-      console.log(properties);
       return properties;
     } else {
       return {};
     }
-  } catch (e) {
-    return e;
-  }
-}
-
-export async function remove(id) {
-  try {
-    let property = await PropertyModel.deleteProperty(id);
-    let reward = await PropertyModel.deleteRewardsByProperty(id);
-    return property;
   } catch (e) {
     return e;
   }

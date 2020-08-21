@@ -9,7 +9,6 @@ console.log("App_Env:", process.env.NODE_ENV);
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-//app.use(routes.reward);
 app.use(routes.property);
 
 export default app;
