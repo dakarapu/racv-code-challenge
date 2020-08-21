@@ -76,6 +76,12 @@ describe("Testing Property Search enpoints", () => {
         "Property is above the avg price for properties in suburb"
       );
     });
+
+    it("Should receive 404 eror when requested  with no properties available in the suburb", async () => {
+      const res = await request(server).get("/properties/Laverton");
+      expect(res.status).toBe(404);
+      expect(res.text).toBe("No property available with the requested suburb");
+    });
   });
 
   describe("POST /properties", () => {

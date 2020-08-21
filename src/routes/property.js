@@ -25,7 +25,7 @@ router.get(
     let suburb = req.params.suburb;
     const property = await PropertyController.getProperty(suburb);
     if (Object.keys(property).length === 0) {
-      res.status(404).send(`No property available with the requested ID`);
+      res.status(404).send(`No property available with the requested suburb`);
     } else {
       res.status(200).send(property);
     }
